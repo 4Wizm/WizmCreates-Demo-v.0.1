@@ -1,0 +1,18 @@
+name: WizmCrates
+version: beta-0.0.1
+main: com.wizm.wizmcrates.WizmCrates
+api-version: "1.21"
+author: Wizm
+description: Powerful and lightweight crates plugin
+softdepend: [PlaceholderAPI]
+commands:
+  crate:
+    description: WizmCrates main command
+    aliases: [crates, wizmcrates]
+    usage: /crate
+permissions:
+  wizmcrates.command.reload: { default: op }
+  wizmcrates.command.key: { default: op }
+  wizmcrates.command.setblock: { default: op }
+  wizmcrates.command.removeblock: { default: op }
+  wizmcrates.command.edit: { default: op }

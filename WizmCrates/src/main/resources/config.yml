@@ -1,0 +1,208 @@
+# ============================================================
+#  WizmCrates v6.1
+#  Aprire una crate NON richiede permessi: serve solo la key.
+#  Colori: & classici Minecraft + #HEX (es. #FF00AA)
+# ============================================================
+
+settings:
+  language-prefix: "&b[WizmCrates] &r"
+  open-cooldown-ms: 1000
+  drop-key-if-full: true
+  hologram:
+    enabled: true
+    see-through-walls: true
+    background-color: "#00000080"
+    update-interval: 20
+  gui:
+    fill-border: true
+    border-material: AIR
+  hover:
+    enabled: true
+    scale-multiplier: 1.35
+    range: 5.0
+  # mode: default = animazione apertura completa
+  # mode: none    = item dato subito
+  open-animation:
+    mode: default
+    shrink-ticks: 12
+    show-ticks: 40
+
+messages:
+  no-permission: "&cNon hai il permesso per usare questo comando!"
+  unknown-command: "&cComando sconosciuto. Usa /crate per aiuto."
+  usage-help: "&7Uso: /crate reload | key | setblock | removeblock | edit"
+  reload-success: "&aConfigurazione ricaricata."
+  cooldown-wait: "&cAspetta prima di riaprire la crate!"
+  no-key-physical: "&cNon hai una chiave fisica per aprire questa crate!"
+  no-key-virtual: "&cNon hai una chiave virtuale per aprire questa crate!"
+  db-not-connected: "&cErrore: Database MySQL non connesso!"
+  guaranteed-reward: "&6Premio garantito sbloccato!"
+  reward-received: "&aHai ottenuto dalla crate &e{crate}&a: &f{reward} &7x{amount}"
+  bulk-no-space: "&cInventario pieno! Libera almeno uno slot per aprire."
+  bulk-summary-header: "&aHai aperto &e{amount}x &acrate &e{crate}&a!"
+  bulk-summary-line: "  &8- &f{reward} &7x{amount}"
+  bulk-guaranteed-line: "  &6&lPREMIO GARANTITO! &f{reward}"
+  timed-reward-received: "&aHai ricevuto &e{amount}x &achiavi automatiche per &e{crate}&a!"
+  key-given-sender: "&aAssegnate &e{amount}x &achiavi di tipo &e{crate} &aa &e{target}&a."
+  key-received-virtual: "&aHai ricevuto &e{amount}x &achiavi virtuali per &e{crate}&a!"
+  key-received-physical: "&aHai ricevuto &e{amount}x &achiavi per &e{crate}&a!"
+  setblock-usage: "&cUso: /crate setblock <crate>"
+  setblock-looking-error: "&cDevi guardare un blocco per impostare la crate."
+  setblock-success: "&aCrate impostata con successo."
+  removeblock-looking-error: "&cGuarda il blocco di una crate da rimuovere."
+  removeblock-success: "&aCrate rimossa."
+  removeblock-not-a-crate: "&cQuesto blocco non e una crate registrata."
+  crate-not-found: "&cCrate inesistente."
+  player-offline: "&cGiocatore non trovato o offline."
+  edit-usage: "&cUso: /crate edit <crate>"
+  edit-added: "&aItem aggiunto alla crate &e{crate}&a!"
+  edit-removed: "&aItem rimosso dalla crate &e{crate}&a!"
+
+# ============================================================
+#  ANIMAZIONI
+#  - particle: nome particela Bukkit OPPURE "none"
+#  - count:    quantita per burst
+#  - interval: ogni quanti tick sparare (3 = 6x/sec)
+#  - sound:    chiave suono (opzionale, "" = niente)
+#  - sound-interval: ogni qunti burst far partire il suono
+# ============================================================
+animations:
+  none:
+    particle: none
+    count: 0
+    interval: 5
+    sound: ""
+    sound-interval: 0
+  fiamme:
+    particle: FLAME
+    count: 5
+    interval: 3
+    sound: block.fire.ambient
+    sound-interval: 30
+  stelle:
+    particle: FIREWORK
+    count: 6
+    interval: 3
+    sound: entity.firework_rocket.launch
+    sound-interval: 25
+  cuori:
+    particle: HEART
+    count: 3
+    interval: 5
+    sound: entity.player.levelup
+    sound-interval: 40
+  magia:
+    particle: ENCHANT
+    count: 8
+    interval: 3
+    sound: block.enchantment_table.use
+    sound-interval: 30
+  anime:
+    particle: SOUL_FIRE_FLAME
+    count: 4
+    interval: 4
+    sound: block.soul_sand.place
+    sound-interval: 30
+    
+  fulmini:
+    particle: ELECTRIC_SPARK
+    count: 8
+    interval: 3
+    sound: item.trident.thunder
+    sound-interval: 25
+  neve:
+    particle: SNOWFLAKE
+    count: 12
+    interval: 4
+    sound: block.snow.place
+    sound-interval: 30
+  stelle_cadenti:
+    particle: END_ROD
+    count: 6
+    interval: 3
+    sound: block.amethyst_block.chime
+    sound-interval: 20
+
+mysql:
+  enabled: false
+  host: "127.0.0.1"
+  port: 3306
+  database: "wizmcrates"
+  username: "root"
+  password: "password"
+  table-prefix: "wizm_"
+  useSSL: false
+
+# ============================================================
+#  TIMED REWARDS
+#  Ogni tot il player riceve automaticamente le key scelte.
+#  - interval: 30s / 5m / 2h / 1d / 1h30m
+#  - crates:   lista di crate di cui dare la key
+#  - key-type: virtual | physical
+#  - amount:   quante key per crate
+#  Placeholder countdown: %wizmcrates_timer_<id>%
+# ============================================================
+timed-rewards:
+  hourly_gift:
+    interval: "1h"
+    crates:
+      - legendary
+    key-type: virtual
+    amount: 1
+  daily_bonus:
+    interval: "24h"
+    crates:
+      - legendary
+    key-type: physical
+    amount: 2
+
+crates:
+  legendary:
+    display-name: "&6&lCRATE LEGGENDARIA"
+    gui-title: "&e&lCRATE LEGGENDARIA"
+    block: orange_shulker_box
+    animation: fulmini
+    hologram:
+      enabled: true
+      offset-y: 1.2
+      lines:
+        - "&#D7D100&lCRATE LEGGENDARIA"
+        - "&r"
+        - "ᴄʟɪᴄᴋ ꜱɪɴɪꜱᴛʀᴏ - ᴘʀᴇᴠɪᴇᴡ"
+        - "&fᴄʟɪᴄᴋ ᴅᴇꜱᴛʀᴏ - ᴀᴘʀɪ"
+        - "&r"
+        - "&#D7D100Possiedi: &f%wizmcrates_keys_legendary% chiavi"
+    key:
+      type: "virtual"
+      material: TRIPWIRE_HOOK
+      name: "&6&lChiave Leggendaria"
+      lore:
+        - "&7Usa questa chiave su una crate"
+        - "&7leggendaria."
+      glow: true
+      custom-model-data: 0
+    rewards:
+      - id: diamond_block
+        chance: 30.0
+        material: DIAMOND_BLOCK
+        amount: 10
+        name: "&b&lBlocchi di Diamante"
+        lore: ["&7Probabilita: &e45%"]
+        commands: []
+      - id: netherite
+        chance: 5.0
+        material: NETHERITE_INGOT
+        amount: 1
+        name: "&8&lNetherite"
+        lore: ["&7Probabilita: &e4%"]
+        commands: []
+      - id: gold
+        chance: 65.0
+        material: GOLD_INGOT
+        amount: 5
+        name: "&e&lOro"
+        lore: ["&7Probabilita: &e15%"]
+        commands: []
+    guaranteed-rewards:
+      - openings: 25
+        reward-id: iron_block
